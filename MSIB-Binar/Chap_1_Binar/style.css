@@ -1,0 +1,167 @@
+body {
+  font-family: Helvetica;
+}
+
+.bg-header {
+  background: #f1f3ff;
+}
+
+.bg-darkblue {
+  width: 100px;
+  height: 34px;
+  background: darkblue;
+}
+
+.btn-nav {
+  background: #5cb85f;
+  width: 100px;
+}
+
+.main-section-right {
+  padding-top: 100px;
+}
+
+.main-section-left {
+  padding-top: 185px;
+}
+
+.btn-main-section {
+  background: #5cb85f;
+}
+
+.our-service {
+  margin-top: 100px;
+}
+
+.ceklis-box {
+  text-align: center;
+}
+.fa-check {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #cfd4ed;
+  color: #0d28a6;
+  outline: none;
+}
+
+.why-us__margin {
+  margin-top: 100px;
+}
+
+.why-us-card__margin {
+  margin-top: 40px;
+}
+
+#slider {
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 200px;
+  padding-right: 200px;
+}
+
+.controller {
+  display: flex;
+  justify-content: center;
+}
+
+#controls i {
+  color: black;
+  font-size: 1rem;
+}
+
+.previous,
+.next {
+  padding: 2px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  border-radius: 50%;
+  outline: none;
+  transition: 0.7s ease-in-out;
+  border: 1px solid grey;
+  background-color: white;
+}
+
+.previous:hover,
+.next:hover {
+  border: 1px solid grey;
+  background-color: limegreen;
+}
+
+.slide-img {
+  background-color: #f1f3ff;
+  width: 100%;
+  height: 300px;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-jarak {
+  margin-top: 30px;
+}
+
+.banner-box {
+  margin-top: 50px;
+  background: #0d28a6;
+  border-radius: 13px;
+}
+
+.btn-banner-section {
+  background: #5cb85f;
+  display: inline-block;
+}
+
+.faq {
+  margin-top: 100px;
+}
+
+.footer {
+  margin: 150px 0 100px 0;
+}
+
+#ourservice {
+  height: 230px;
+  width: 100%;
+  opacity: 0%;
+
+  background-color: pink;
+  z-index: -1;
+  position: Absolute;
+}
+
+#whyus {
+  height: 230px;
+  width: 100%;
+  opacity: 0%;
+
+  background-color: pink;
+  z-index: -1;
+  position: Absolute;
+}
+
+#testimonial {
+  margin-top: -20px;
+  height: 230px;
+  width: 100%;
+  opacity: 0%;
+
+  background-color: pink;
+  z-index: -1;
+  position: Absolute;
+}
+
+#faq {
+  height: 230px;
+  width: 100%;
+  opacity: 0%;
+
+  background-color: pink;
+  z-index: -1;
+  position: Absolute;
+}
