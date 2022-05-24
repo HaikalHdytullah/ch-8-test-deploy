@@ -45,6 +45,25 @@ body {
   display: block;
 }
 
+.cars {
+  position: relative;
+  font-size: 14px;
+  margin-top: 40px;
+  font-style: normal;
+  font-weight: 300;
+  width: 90%;
+  background-color: white;
+  z-index: 1;
+}
+
+.img-car {
+  object-fit: cover;
+}
+
+.text {
+  text-align: justify;
+}
+
 @media screen and (max-width: 900px) {
   .main-section-left {
     padding-top: 80px;

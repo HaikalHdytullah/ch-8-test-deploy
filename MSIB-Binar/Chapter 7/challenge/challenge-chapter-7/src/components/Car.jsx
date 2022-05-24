@@ -1,15 +1,36 @@
 import React from "react";
 import { Card } from "react-bootstrap";
+import "../css/searchCar.css";
 
 const Car = ({ car }) => {
-  const { plate, manufacture } = car;
+  const {
+    manufacture,
+    image,
+    rent_per_day,
+    capacity,
+    description,
+    transmission,
+    year,
+    model,
+  } = car;
 
   return (
-    <Card>
-      <Card.Header as="h5">{plate}</Card.Header>
+    <Card className="h-100">
       <Card.Body>
-        <Card.Title>{plate}</Card.Title>
-        <Card.Text>{plate}</Card.Text>
+        <img
+          src={image}
+          alt={(manufacture, model)}
+          className="img-fluid img-car mb-3 h-100"
+        />
+        <br />
+        <Card.Text>
+          {manufacture} {model}
+        </Card.Text>
+        <Card.Text>
+          {capacity} seats, {transmission} transmission, {year}
+        </Card.Text>
+        <Card.Text>Rp. {rent_per_day} / day</Card.Text>
+        <Card.Text className="text">{description}</Card.Text>
       </Card.Body>
     </Card>
   );

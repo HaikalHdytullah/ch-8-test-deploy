@@ -15,13 +15,7 @@ import "../css/searchCar.css";
 
 function SearchCar(props) {
   const dispatch = useDispatch();
-  const { cars, error } = useSelector((state) => state.post);
-
-  useEffect(() => {
-    (async () => {
-      dispatch(getAllCars());
-    })();
-  }, [dispatch]);
+  const { cars, error } = useSelector((state) => state.car);
 
   useEffect(() => {
     if (error) {
@@ -36,20 +30,17 @@ function SearchCar(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (driver === "") {
+      alert("Driver is required");
+    }
     if (date === "") {
       alert("Date is required");
     }
     if (time === "") {
       alert("Time is required");
     }
-    if (passenger === "") {
-      alert("Passenger is required");
-    }
-    if (driver === "") {
-      alert("Driver is required");
-    }
-    if (date !== "" && time !== "" && passenger !== "" && driver !== "") {
-      dispatch(getAllCars({ date, time, passenger }));
+    if (date !== "" && time !== "" && driver !== "") {
+      dispatch(getAllCars());
     }
   };
 
@@ -70,9 +61,7 @@ function SearchCar(props) {
                 value={driver}
                 onChange={(e) => setDriver(e.target.value)}
               >
-                <option selected value="">
-                  Pilih Tipe Driver
-                </option>
+                <option defaultValue={1}>Pilih Tipe Driver</option>
                 <option value="1">Dengan Sopir</option>
                 <option value="2">Tanpa Sopir (Lepas Kunci)</option>
               </Form.Select>
@@ -112,24 +101,22 @@ function SearchCar(props) {
         </Form>
       </Container>
       <Container>
-        {handleSubmit ? (
+        {!handleSubmit ? (
+          <></>
+        ) : (
           <>
             <Row className="my-4">
               {cars.length === 0 ? (
-                <>
-                  <h1>Loading...</h1>
-                </>
+                <></>
               ) : (
-                cars.map((car) => (
-                  <Col key={car.id} md={4} className="my-2">
-                    <Car car={car} />
+                cars.car.map((cars) => (
+                  <Col key={cars.id} md={6} sm={12} lg={4} className="my-2">
+                    <Car car={cars} />
                   </Col>
                 ))
               )}
             </Row>
           </>
-        ) : (
-          <></>
         )}
       </Container>
       {/* Footer Section */}
