@@ -8,8 +8,14 @@ import "./index.css";
 
 import App from "./App";
 import SearchCar from "./pages/SearchCar";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Protected from "./components/Protected";
+import ProtectedLogin from "./components/ProtectedLogin";
+
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import store from "./redux/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

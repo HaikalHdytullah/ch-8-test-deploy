@@ -1,7 +1,21 @@
 import React from "react";
 import { Nav, Button, Navbar, Container } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../redux/actions/authActions";
+import Swal from "sweetalert2";
 
-function NavBar() {
+function NavBar(props) {
+  const dispatch = useDispatch();
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
+
+  const handleLogout = () => {
+    await Swal.fire({
+      icon: "success",
+      title: "Success",
+      text: "You have successfully logged out",
+    });
+    dispatch(logout());
+  };
   return (
     <>
       <Navbar
@@ -27,9 +41,22 @@ function NavBar() {
               <Nav.Link href="/cars" className="mx-3">
                 FAQ
               </Nav.Link>
-              <Button variant="success" className="mx-3">
-                Register
-              </Button>
+              {!isAuthenticated ? (
+                <Button variant="success" className="mx-3" href="/login">
+                  Login
+                </Button>
+              ) : (
+                <>
+                  <Nav.Link>{user}</Nav.Link>
+                  <Button
+                    variant="danger"
+                    className="mx-3"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </Button>
+                </>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>
