@@ -8,11 +8,9 @@ describe("POST /v1/create", () => {
       password: "123",
     });
 
-    const name = "Honda";
-    const price = "100000";
-    const image = `https://source.unsplash.com/${Math.floor(
-      Math.random() * 500
-    )}x${Math.floor(Math.random() * 500)}`;
+    const name = "Car";
+    const price = 100000;
+    const image = `https://source.unsplash.com/500x500`;
     const size = "Medium";
 
     const response = await request(app)
