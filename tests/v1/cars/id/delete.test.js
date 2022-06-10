@@ -11,15 +11,15 @@ const createCar = {
 };
 
 describe("DELETE /v1/cars/:id", () => {
-  let car, TokenAdmin, TokenCustomer;
+  let car, accessTokenAdmin, accessTokenCustomer;
 
   beforeEach(async () => {
-    TokenAdmin = await request(app).post("/v1/auth/login").send({
+    accessTokenAdmin = await request(app).post("/v1/auth/login").send({
       email: emailAdmin,
       password,
     });
 
-    TokenCustomer = await request(app).post("/v1/auth/login").send({
+    accessTokenCustomer = await request(app).post("/v1/auth/login").send({
       email: emailCustomer,
       password,
     });
@@ -27,16 +27,16 @@ describe("DELETE /v1/cars/:id", () => {
     car = await request(app)
       .post("/v1/cars")
       .set("Content-Type", "application/json")
-      .set("Authorization", `Bearer ${TokenAdmin.body.accessToken}`)
+      .set("Authorization", `Bearer ${accessTokenAdmin.body.accessToken}`)
       .send(createCar);
 
-    return car, TokenAdmin, TokenCustomer;
+    return car, accessTokenAdmin, accessTokenCustomer;
   });
 
   it("should response with 204 as status code", async () => {
     const response = await request(app)
       .delete("/v1/cars/" + car.body.id)
-      .set("Authorization", `Bearer ${TokenAdmin.body.accessToken}`);
+      .set("Authorization", `Bearer ${accessTokenAdmin.body.accessToken}`);
 
     expect(response.status).toBe(204);
   });
@@ -44,7 +44,7 @@ describe("DELETE /v1/cars/:id", () => {
   it("should response with 401 as status code", async () => {
     const response = await request(app)
       .delete("/v1/cars/" + car.body.id)
-      .set("Authorization", `Bearer ${TokenCustomer.body.accessToken}`);
+      .set("Authorization", `Bearer ${accessTokenCustomer.body.accessToken}`);
 
     expect(response.status).toBe(401);
     if (response.body.details === null) {
@@ -67,11 +67,5 @@ describe("DELETE /v1/cars/:id", () => {
         }),
       }),
     });
-  });
-  afterEach(async () => {
-    await request(app)
-      .delete("/v1/cars/" + car.body.id)
-      .set("Content-Type", "application/json")
-      .set("Authorization", `Bearer ${TokenAdmin.body.accessToken}`);
   });
 });
