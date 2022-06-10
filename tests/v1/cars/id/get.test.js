@@ -38,7 +38,7 @@ describe("GET /v1/cars/:id", () => {
   });
 
   afterEach(async () => {
-    return request(app)
+    request(app)
       .delete("/v1/cars/" + car.body.id)
       .set("Content-Type", "application/json")
       .set("Authorization", `Bearer ${accessToken.body.accessToken}`);
