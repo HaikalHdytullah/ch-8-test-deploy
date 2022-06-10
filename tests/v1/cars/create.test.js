@@ -1,26 +1,41 @@
 const request = require("supertest");
 const app = require("../../../app");
+const emailAdmin = "admin@gmail.com";
+const emailCustomer = "customer@gmail.com";
+const password = "123";
+const createCar = {
+  name: "Car",
+  price: 100000,
+  size: "S",
+  image: "https://source.unsplash.com/500x500",
+};
 
 describe("POST /v1/create", () => {
-  it("should response with 201 as status code", async () => {
-    const accessToken = await request(app).post("/v1/auth/login").send({
-      email: "admin@gmail.com",
-      password: "123",
+  let tokenAdmin, tokenCustomer, responseAdmin, responseCustomer;
+  beforeEach(async () => {
+    tokenAdmin = await request(app).post("/v1/auth/login").send({
+      email: emailAdmin,
+      password,
     });
-
-    const name = "Car";
-    const price = 100000;
-    const image = `https://source.unsplash.com/500x500`;
-    const size = "Medium";
-
-    const response = await request(app)
+    tokenCustomer = await request(app).post("/v1/auth/login").send({
+      email: emailCustomer,
+      password,
+    });
+    responseAdmin = await request(app)
       .post("/v1/cars")
       .set("Content-Type", "application/json")
-      .set("Authorization", `Bearer ${accessToken.body.accessToken}`)
-      .send({ name, price, image, size });
+      .set("Authorization", `Bearer ${tokenAdmin.body.accessToken}`)
+      .send(createCar);
+    responseCustomer = await request(app)
+      .post("/v1/cars")
+      .set("Content-Type", "application/json")
+      .set("Authorization", `Bearer ${tokenCustomer.body.accessToken}`)
+      .send(createCar);
+  });
 
-    expect(response.status).toBe(201);
-    expect(response.body).toEqual({
+  it("should response with 201 as status code", async () => {
+    expect(responseAdmin.status).toBe(201);
+    expect(responseAdmin.body).toEqual({
       id: expect.any(Number),
       name: expect.any(String),
       price: expect.any(Number),
@@ -33,25 +48,9 @@ describe("POST /v1/create", () => {
   });
 
   it("should response with 401 as status code", async () => {
-    const accessToken = await request(app).post("/v1/auth/login").send({
-      email: "customer@gmail.com",
-      password: "123",
-    });
-
-    const name = "Honda";
-    const price = "100000";
-    const image = `https://source.unsplash.com/720x480`;
-    const size = "Medium";
-
-    const response = await request(app)
-      .post("/v1/cars")
-      .set("Content-Type", "application/json")
-      .set("Authorization", `Bearer ${accessToken.body.accessToken}`)
-      .send({ name, price, image, size });
-
-    expect(response.status).toBe(401);
-    if (response.body.details === null) {
-      expect(response.body).toEqual({
+    expect(responseCustomer.status).toBe(401);
+    if (responseCustomer.body.details === null) {
+      expect(responseCustomer.body).toEqual({
         error: expect.objectContaining({
           name: expect.any(String),
           message: expect.any(String),
@@ -60,7 +59,7 @@ describe("POST /v1/create", () => {
       });
       return;
     }
-    expect(response.body).toEqual({
+    expect(responseCustomer.body).toEqual({
       error: expect.objectContaining({
         name: expect.any(String),
         message: expect.any(String),
@@ -70,5 +69,15 @@ describe("POST /v1/create", () => {
         }),
       }),
     });
+  });
+  afterEach(async () => {
+    await request(app)
+      .delete("/v1/cars/" + responseAdmin.body.id)
+      .set("Content-Type", "application/json")
+      .set("Authorization", `Bearer ${tokenAdmin.body.accessToken}`);
+    await request(app)
+      .delete("/v1/cars/" + responseCustomer.body.id)
+      .set("Content-Type", "application/json")
+      .set("Authorization", `Bearer ${tokenAdmin.body.accessToken}`);
   });
 });

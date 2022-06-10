@@ -3,6 +3,12 @@ const app = require("../../../../app");
 const emailAdmin = "admin@gmail.com";
 const emailCustomer = "customer@gmail.com";
 const password = "123";
+const createCar = {
+  name: "Car",
+  price: 10000,
+  size: "S",
+  image: "https://source.unsplash.com/500x500",
+};
 
 describe("DELETE /v1/cars/:id", () => {
   let car, accessTokenAdmin, accessTokenCustomer;
@@ -18,21 +24,11 @@ describe("DELETE /v1/cars/:id", () => {
       password,
     });
 
-    const name = "Car";
-    const price = 100000;
-    const size = "S";
-    const image = "https://source.unsplash.com/500x500";
-
     car = await request(app)
       .post("/v1/cars")
       .set("Content-Type", "application/json")
       .set("Authorization", `Bearer ${accessTokenAdmin.body.accessToken}`)
-      .send({
-        name,
-        price,
-        size,
-        image,
-      });
+      .send(createCar);
 
     return car, accessTokenAdmin, accessTokenCustomer;
   });

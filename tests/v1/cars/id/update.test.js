@@ -3,16 +3,15 @@ const app = require("../../../../app");
 const emailAdmin = "admin@gmail.com";
 const emailCustomer = "customer@gmail.com";
 const password = "123";
+const createCar = {
+  name: "Car",
+  price: 100000,
+  size: "S",
+  image: "https://source.unsplash.com/500x500",
+};
 
 describe("PUT /v1/cars/:id", () => {
   let car, tokenAdmin, tokenCustomer;
-
-  const createCar = {
-    name: "Car",
-    price: 100000,
-    size: "S",
-    image: "https://source.unsplash.com/500x500",
-  };
 
   beforeAll(async () => {
     tokenAdmin = await request(app).post("/v1/auth/login").send({

@@ -2,14 +2,15 @@ const request = require("supertest");
 const app = require("../../../../app");
 const email = "admin@gmail.com";
 const password = "123";
+const createCar = {
+  name: "Car",
+  price: 100000,
+  size: "S",
+  image: "https://source.unsplash.com/500x500",
+};
 
 describe("GET /v1/cars/:id", () => {
   let car, accessToken;
-
-  const name = "Car";
-  const price = 100000;
-  const size = "S";
-  const image = "https://source.unsplash.com/500x500";
   beforeEach(async () => {
     accessToken = await request(app).post("/v1/auth/login").send({
       email,
@@ -20,12 +21,7 @@ describe("GET /v1/cars/:id", () => {
       .post("/v1/cars")
       .set("Content-Type", "application/json")
       .set("Authorization", `Bearer ${accessToken.body.accessToken}`)
-      .send({
-        name,
-        price,
-        size,
-        image,
-      });
+      .send(createCar);
 
     return car;
   });

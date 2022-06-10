@@ -7,17 +7,17 @@ const emailAdmin = "admin@gmail.com";
 const emailCustomer = "customer@gmail.com";
 const password = "123";
 const wrongToken = "wrongToken";
+const createCar = {
+  name: "Car",
+  price: 100000,
+  size: "s",
+  image: "https://source.unsplash.com/500x500",
+};
 
 describe("POST /v1/cars/:id/rent", () => {
   let car, TokenAdmin, TokenCustomer;
   let rentStartedAt = dayjs().add(1, "day");
   let rentEndedAt = dayjs(rentStartedAt).add(1, "day");
-  const createCar = {
-    name: "Car",
-    price: 100000,
-    size: "s",
-    image: "https://source.unsplash.com/500x500",
-  };
 
   beforeAll(async () => {
     TokenAdmin = await request(app).post("/v1/auth/login").send({
